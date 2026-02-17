@@ -1,0 +1,324 @@
+    
+@font-face {
+    font-family: "Voyage Bold";
+    src: url("assets/vj-voyage-font-1769053628-0/voyage-bold.otf") format("opentype");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+}
+
+@font-face {
+  font-family: "Kobe1.1 Bold";
+  src: url("assets/Kobe-Font/kobe-bold.otf") format("opentype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Kobe1.1";
+  src: url("assets/Kobe-Font/kobe-bold.otf") format("opentype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Voyage Bold Placeholder";
+  src: local("Arial");
+  ascent-override: 103.98%;
+  descent-override: 18.35%;
+  line-gap-override: 0;
+  size-adjust: 98.10%;
+}
+
+@font-face {
+  font-family: "Kobe1.1 Bold Placeholder";
+  src: local("Arial");
+  ascent-override: 88.86%;
+  descent-override: 24.48%;
+  line-gap-override: 0;
+  size-adjust: 93.97%;
+}
+
+:root {
+  --title-color: #2f56c3;
+  --button-bg: #8a1f3d;
+  --button-text: #f7efe8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100svh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Kobe1.1 Bold", "Kobe1.1 Bold Placeholder", "Times New Roman", serif;
+  background-color: #fff8f2;
+  background-image:
+    radial-gradient(circle at 50% 28%, #f8ded8 0%, #f9ece8 42%, #fff8f2 100%),
+    url("assets/Gradient.svg");
+  background-position: center top, center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  overflow: hidden;
+}
+
+.hero {
+  width: min(1100px, 100%);
+  flex: 1;
+  min-height: 0;
+  padding: clamp(8px, 2vh, 20px) clamp(16px, 4vw, 40px) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(4px, 1.1vh, 12px);
+}
+
+.disco {
+  width: clamp(44px, 7vw, 72px);
+  height: auto;
+  display: block;
+}
+
+/* Location + Date + More Info */
+.frame-8 {
+  width: fit-content;
+  max-width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  column-gap: clamp(6px, 2vw, 26px);
+  row-gap: clamp(2px, 2vw, 6px);
+}
+
+/* RSVP + last date */
+.frame-15 {
+  width: fit-content;
+  max-width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  column-gap: clamp(6px, 2vw, 26px);
+  row-gap: clamp(2px, 2vw, 6px);
+}
+
+/* 178 days to go! */
+.frame-16 {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  /*column-gap: clamp(6px, 2vw, 26px);
+  row-gap: clamp(2px, 2vw, 6px);*/
+  width: 135;
+  height: 24;
+  top: 709px;
+  left: 652.5px;
+  gap: 4px;
+}
+
+/* Title + Location + Date + More Info */
+.frame-18 {
+  width: fit-content;
+  max-width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  column-gap: clamp(6px, 2vw, 26px);
+  row-gap: clamp(2px, 2vw, 6px);
+}
+
+/*.countdown {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+}*/
+
+    .title-row {
+      --floral-slot: clamp(84px, 18vw, 230px);
+      width: fit-content;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: var(--floral-slot) auto var(--floral-slot);
+      align-items: center;
+      justify-items: center;
+      justify-content: center;
+      column-gap: clamp(6px, 2vw, 26px);
+    }
+
+    .floral-slot {
+      width: var(--floral-slot);
+      display: flex;
+      justify-content: center;
+    }
+
+    .floral {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .title {
+      margin: 0;
+      font-family: "Voyage Bold", "Voyage Bold Placeholder", "Times New Roman", serif;
+      font-weight: 700;
+      color: var(--title-color);
+      font-size: clamp(64px, 5.6vw, 52px);
+      /*font-size: 64px;*/
+      line-height: 120%;
+      text-align: center;
+      white-space: nowrap;
+      padding-inline: clamp(4px, 2vw, 14px);
+      font-style: Bold;
+      letter-spacing: 2%;
+    }
+
+    .locationText {
+      margin: 0;
+      font-family: "Voyage Bold";
+      width: 403;
+      height: 31;
+      opacity: 1;
+      font-weight: 700;
+      font-style: Bold;
+      /*font-size: clamp(16px, 2.4vw, 22px);*/
+      font-size: 22px;
+      line-height: 140%;
+      letter-spacing: 4%;
+      color: #2F56C3D9;
+    }
+
+    .weddingDateBorder {
+      margin: 0;
+      width: 146;
+      height: 35;
+      opacity: 1;
+      gap: 10px;
+      border-radius: 999px;
+      padding-top: 6px;
+      padding-right: 16px;
+      padding-bottom: 6px;
+      padding-left: 16px;
+      background: #8A1F3D29;
+    }
+
+    .weddingDateText {
+      margin: 0;
+      width: 114;
+      height: 19;
+      opacity: 1;
+      font-family: "Kobe1.1 Bold";
+      font-weight: 700;
+      font-style: Bold;
+      /*font-size: clamp(15px, 2vw, 18px);*/
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: 6%;
+      color: #2F56C3;
+    }
+
+    .moreInfoText {
+      margin: 0;
+      width: 136;
+      height: 19;
+      opacity: 1;
+      font-family: "Kobe1.1 Bold";
+      font-weight: 700;
+      font-style: Bold;
+      /*font-size: clamp(15px, 2vw, 18px);*/
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #2F56C3CC;
+    }
+
+    .lastRsvpDateText {
+      margin: 0;
+      width: 197;
+      height: 19;
+      opacity: 1;
+      font-family: "Kobe1.1";
+      font-weight: 700;
+      font-style: Bold;
+      /*font-size: clamp(15px, 2vw, 18px);*/
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #2F56C3CC;
+    }
+
+    .daysLeftText {
+      margin: 0;
+      opacity: 1;
+      font-family: "Kobe1.1 Bold";
+      font-weight: 700;
+      /*font-size: clamp(16px, 2.2vw, 20px);*/
+      font-style: Bold;
+      line-height: 24px;
+      letter-spacing: 0%;
+      color: #2F56C3CC;
+      font-size: 20px;
+    }
+
+    .dayCountText {
+      margin: 0;
+      opacity: 1;
+      font-family: "Kobe1.1 Bold";
+      font-weight: 700;
+      font-size: 32px;
+      /*font-size: clamp(24px, 4vw, 32px);*/
+      letter-spacing: 2%;
+      color: #2F56C3;
+      font-style: Bold;
+      line-height: 24px;
+    }
+
+    .rsvp {
+      appearance: none;
+      border: 2px;
+      border-radius: 14px;
+      border-color: var(--button-bg);
+      background: var(--button-bg);
+      color: var(--button-text);
+      padding: 14px 30px;
+      /*font-family: "Kobe1.1 Bold", "Kobe1.1 Bold Placeholder", "Times New Roman", serif;*/
+      font-family: "Kobe1.1 Bold";
+      font-weight: 700;
+      font-size: 16px;
+      /*font-size: clamp(14px, 1.7vw, 16px);*/
+      letter-spacing: 8%;
+      cursor: pointer;
+      box-shadow: 0px 2px 8px 0px #8A1F3D33, 0px -1px 2px 0px #FFFFFF1A inset;
+      width: clamp(160px, 28vw, 213px);
+      height: clamp(42px, 7.2vh, 52px);
+      opacity: 1;
+      border-width: 2px;
+      font-style: Bold;
+      line-height: 24px;
+    }
+
+.wave {
+  margin-top: auto;
+  width: 100%;
+  max-width: 1200px;
+  max-height: clamp(36px, 7vh, 62px);
+  height: auto;
+  display: block;
+}
+
+.debug-meta {
+  display: none;
+}
