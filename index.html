@@ -29,21 +29,21 @@
 
 	<style data-framer-font-css>
 
-@font-face {
-  font-family: "Voyage Bold";
-  src: url("assets/vj-voyage-font-1769053628-0/voyage-bold.otf") format("opentype");
-  font-display: swap;
-  font-style: normal;
-  font-weight: 700;
-}
+		@font-face {
+  			font-family: "Voyage Bold";
+  			src: url("assets/vj-voyage-font-1769053628-0/voyage-bold.otf") format("opentype");
+  			font-display: swap;
+  			font-style: normal;
+  			font-weight: 700;
+		}
 
-@font-face {
-  font-family: "Kobe1.1 Bold";
-  src: url("assets/Kobe-Font/kobe-bold.otf") format("opentype");
-  font-display: swap;
-  font-style: normal;
-  font-weight: 700;
-}
+		@font-face {
+  			font-family: "Kobe1.1 Bold";
+  			src: url("assets/Kobe-Font/kobe-bold.otf") format("opentype");
+  			font-display: swap;
+  			font-style: normal;
+  			font-weight: 700;
+		}
 		/*@font-face {
 			font-family: "Voyage Bold";
 			src: url("https://framerusercontent.com/assets/fAFUHAbv7lnfzc28kk2BqyvF2M4.woff2");
@@ -2084,145 +2084,57 @@
 			display: block
 		}
 
+		.framer-vuTDD[data-framer-name="Wave A"] {
+			animation: wave-a-drift 10s ease-in-out infinite;
+			will-change: transform;
+		}
+
+		.framer-vuTDD[data-framer-name="Wave B"] {
+			animation: wave-b-drift 14s ease-in-out infinite;
+			will-change: transform;
+		}
+
+		@keyframes wave-a-drift {
+			0% {
+				transform: translateX(-50%);
+			}
+
+			50% {
+				transform: translateX(-46%);
+			}
+
+			100% {
+				transform: translateX(-50%);
+			}
+		}
+
+		@keyframes wave-b-drift {
+			0% {
+				transform: translateX(-50%);
+			}
+
+			50% {
+				transform: translateX(-54%);
+			}
+
+			100% {
+				transform: translateX(-50%);
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.framer-vuTDD[data-framer-name="Wave A"],
+			.framer-vuTDD[data-framer-name="Wave B"] {
+				animation: none;
+			}
+		}
+
 		.ssr-variant {
 			display: contents
 		}
 	</style>
 
 	<script src="scripts.js" type="text/javascript"></script>
-	<script>
-
-		(function () {
-
-			const targetDate = new Date("2026-07-21");
-
-			function getDayCount() {
-
-      			const today = new Date();
-
-      			today.setHours(0, 0, 0, 0);
-      			targetDate.setHours(0, 0, 0, 0);
-
-				return Math.max(0, Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24)));
-
-			}
-
-			const diffDays = getDayCount();
-
-			function setDaysLeft(daysLeftTextSuffix) {
-
-				//document.getElementById("dayCount").textContent = `${diffDays} ${daysLeftTextSuffix}`;
-
-				document.querySelectorAll(".dayCount").forEach((node) => {
-					if (node.textContent !== diffDays) {
-						console.log("setting diffdays");
-						const t = `${diffDays} ${daysLeftText}`;
-						node.textContent = t;
-						console.log(t);
-					}
-				});
-
-			}
-
-			// Find country
-      		let country = null;
-
-      		try {
-
-        		country = typeof getCountry === "function" ? getCountry() : null;
-
-      		} catch (_) {
-
-				console.log("could not get country");
-
-			}
-
-			// Default values
-      		let locationText = "Villa Soludden (Stockholm Archipelago)";
-			let rsvpText = "RSVP";
-			let moreInfoText = "More info to come";
-			let lastRsvpDateText = "Please respond by March 1st";
-			let daysLeftText = "days left!";
-      	
-			if (country === "Sweden") {
-
-        		locationText = "Villa Soludden (Arcipelago di Stoccolma)";
-				rsvpText = "Rispondi";
-				moreInfoText = "A breve piu dettagli";
-				lastRsvpDateText = "Facci sapere entro il 1 marzo";
-				daysLeftText = "giorni rimanenti!";
-
-      		} else if (country === "Poland") {
-
-        		locationText = "Villa Soludden (Archipelag Sztokholmski)";
-				rsvpText = "Odpowiedz";
-				moreInfoText = "Więcej informacji wkrótce";
-				lastRsvpDateText = "Daj nam znać do 1 marca";
-				daysLeftText = "dni do ślubu!";
-
-      		}
-
-			function applyLocationText() {
-				document.querySelectorAll(".locationTextContent").forEach((node) => {
-					if (node.textContent !== locationText) node.textContent = locationText;
-				});
-			}
-
-			function applyMoreInfoText() {
-				document.querySelectorAll(".moreInfoContent").forEach((node) => {
-					if (node.textContent !== moreInfoText) node.textContent = moreInfoText;
-				});
-			}
-
-			function applyRsvpText() {
-				document.querySelectorAll(".rsvpContent").forEach((node) => {
-					if (node.textContent !== rsvpText) node.textContent = rsvpText;
-				});
-			}
-
-			function applyLastRsvpDateText() {
-				document.querySelectorAll(".lastRsvpDateContent").forEach((node) => {
-					if (node.textContent !== lastRsvpDateText) node.textContent = lastRsvpDateText;
-				});
-			}
-
-			function applyTexts() {
-				applyLocationText();
-				applyMoreInfoText();
-				applyRsvpText();
-				applyLastRsvpDateText();
-				setDaysLeft(daysLeftText);
-			}
-
-			function syncTexts() {
-
-				applyTexts();
-
-				let runs = 0;
-				const maxRuns = 40;
-				const syncTimer = setInterval(() => {
-					applyTexts();
-					runs += 1;
-					if (runs >= maxRuns) clearInterval(syncTimer);
-				}, 100);
-
-				const observer = new MutationObserver(() => applyTexts());
-				observer.observe(document.body, {
-					subtree: true,
-					childList: true,
-					characterData: true
-				});
-
-				setTimeout(() => observer.disconnect(), 8000);
-
-			}
-
-			//document.addEventListener("DOMContentLoaded", syncTexts);
-			window.addEventListener("load", applyTexts);
-
-		})();
-
-	</script>
 
 </head>
 
@@ -2260,6 +2172,7 @@
 						style="image-rendering:pixelated;flex-shrink:0;background-size:100% 100%;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 xmlns:xlink=%22http://www.w3.org/1999/xlink%22 viewBox=%220 0 1201 800%22 overflow=%22visible%22><path d=%22M 0 0 L 1201 0 L 1201 800 L 0 800 Z%22 fill=%22transparent%22></path></svg>')"
 						class="framer-94ar3t" aria-hidden="true"></div>
 				</div>
+
 				<div class="framer-o4qfga" data-framer-name="Grain B">
 					<div style="position:absolute;border-radius:inherit;corner-shape:inherit;top:0;right:0;bottom:0;left:0" data-framer-background-image-wrapper="true">
 						
@@ -2354,18 +2267,19 @@
 							</div>
 
 						</div>
+
+						<!-- RSVP Button -->
 						<div class="framer-vy41cu" data-framer-name="Button">
-							<div class="framer-1qtzbv3" data-framer-name="Mask group"><a
-									class="framer-hpvms framer-lux5qc" data-border="true" data-framer-name="Button"
-									href="https://forms.gle/UTFtb1QmBxz4TBHJA" target="_blank" rel="noopener">
+							<div class="framer-1qtzbv3" data-framer-name="Mask group">
+								<a id="rsvpButtonId1" class="framer-hpvms framer-lux5qc rsvpButtonLink" data-border="true" data-framer-name="Button" href="https://forms.gle/UTFtb1QmBxz4TBHJA" target="_blank" rel="noopener">
 									<div class="framer-u8saji" data-framer-name="Search" style="transform:none" data-framer-component-type="RichTextContainer">
 										<p dir="auto"
 											style="--font-selector:Q1VTVE9NVjI7S29iZTEuMSBCb2xk;--framer-font-family:&quot;Kobe1.1 Bold&quot;, &quot;Kobe1.1 Bold Placeholder&quot;, sans-serif;--framer-font-size:20px;--framer-font-weight:700;--framer-letter-spacing:0.08em;--framer-line-height:24px;--framer-text-color:rgb(247, 239, 232)"
 											class="framer-text rsvpContent">RSVP</p>
 									</div>
-								</a></div>
-							<div class="framer-1s1f23y" data-framer-name="Kindly respond by Feb 14th"
-								style="transform:none" data-framer-component-type="RichTextContainer">
+								</a>
+							</div>
+							<div class="framer-1s1f23y" data-framer-name="Kindly respond by Feb 14th" style="transform:none" data-framer-component-type="RichTextContainer">
 								<p dir="auto"
 									style="--font-selector:Q1VTVE9NVjI7S29iZTEuMSBCb2xk;--framer-font-family:&quot;Kobe1.1 Bold&quot;, &quot;Kobe1.1 Bold Placeholder&quot;, sans-serif;--framer-font-size:18px;--framer-font-weight:700;--framer-text-color:rgba(47, 86, 195, 0.9)"
 									class="framer-text lastRsvpDateContent">Please respond by March 1st</p>
@@ -2408,15 +2322,24 @@
 
 				</div>
 
+				<!--
 				<img data-framer-name="Wave A" alt class="framer-vuTDD framer-13dhxsz"
-					src="data:image/svg+xml,<svg display=&quot;block&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 854 59&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><defs ><linearGradient id=&quot;L33cabhey-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(47, 86, 195)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(137, 160, 226)&quot;/></linearGradient><linearGradient id=&quot;MoySP48X_-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(243, 224, 212)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(71, 105, 202)&quot;/></linearGradient></defs><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.17 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.431 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23L33cabhey-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;L33cabhey&quot; width=&quot;474px&quot;/><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.171 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.432 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23MoySP48X_-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;MoySP48X_&quot; transform=&quot;translate(380 0)&quot; width=&quot;474px&quot;/></svg>"
+					src="assets/wave.svg"
 					style="opacity:1;transform:translateX(-50%)"><img data-framer-name="Wave B" alt
 					class="framer-vuTDD framer-15egqo"
-					src="data:image/svg+xml,<svg display=&quot;block&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 854 59&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><defs ><linearGradient id=&quot;L33cabhey-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(47, 86, 195)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(137, 160, 226)&quot;/></linearGradient><linearGradient id=&quot;MoySP48X_-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(243, 224, 212)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(71, 105, 202)&quot;/></linearGradient></defs><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.17 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.431 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23L33cabhey-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;L33cabhey&quot; width=&quot;474px&quot;/><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.171 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.432 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23MoySP48X_-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;MoySP48X_&quot; transform=&quot;translate(380 0)&quot; width=&quot;474px&quot;/></svg>"
+					src="assets/wave.svg"
 					style="opacity:1;transform:translateX(-50%)">
+				-->
+                <img data-framer-name="Wave A" alt class="framer-vuTDD framer-13dhxsz"
+                    src="assets/wave.svg"
+                    style="opacity:1;transform:translateX(-50%)"><img data-framer-name="Wave B" alt
+                    class="framer-vuTDD framer-15egqo"
+                    src="assets/wave.svg"
+                    style="opacity:1;transform:translateX(-50%)">
 
 			</div>
 
+			<!-- Medium Screen -->
 			<div class="framer-1iivips hidden-72rtr7 hidden-1o45a1" data-framer-name="bg">
 				
 				<div class="ssr-variant hidden-179qn3q">
@@ -2602,12 +2525,12 @@ s						</div>
 								</div>
 							</div>
 						</div>
+						
+						<!-- RSVP Button -->
 						<div class="framer-12cq6dc" data-framer-name="Button">
-							<div class="framer-7oad65" data-framer-name="Mask group"><a
-									class="framer-1y7kj73 framer-lux5qc" data-border="true" data-framer-name="Button"
-									href="https://forms.gle/UTFtb1QmBxz4TBHJA" target="_blank" rel="noopener">
-									<div class="framer-1w7co24" data-framer-name="Search" style="transform:none"
-										data-framer-component-type="RichTextContainer">
+							<div class="framer-7oad65" data-framer-name="Mask group">
+								<a id="rsvpButtonId2" class="framer-1y7kj73 framer-lux5qc rsvpButtonLink" data-border="true" data-framer-name="Button" href="https://forms.gle/UTFtb1QmBxz4TBHJA" target="_blank" rel="noopener">
+									<div class="framer-1w7co24" data-framer-name="Search" style="transform:none" data-framer-component-type="RichTextContainer">
 										<p dir="auto"
 											style="--font-selector:Q1VTVE9NVjI7S29iZTEuMSBCb2xk;--framer-font-family:&quot;Kobe1.1 Bold&quot;, &quot;Kobe1.1 Bold Placeholder&quot;, sans-serif;--framer-font-size:20px;--framer-font-weight:700;--framer-letter-spacing:0.08em;--framer-line-height:20px;--framer-text-color:rgb(247, 239, 232)"
 											class="framer-text rsvpContent">RSVP</p>
@@ -2666,10 +2589,10 @@ s						</div>
 					</div>
 				</div>
 				<img data-framer-name="Wave A" alt class="framer-vuTDD framer-zhuofh"
-					src="data:image/svg+xml,<svg display=&quot;block&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 854 59&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><defs ><linearGradient id=&quot;L33cabhey-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(47, 86, 195)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(137, 160, 226)&quot;/></linearGradient><linearGradient id=&quot;MoySP48X_-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(243, 224, 212)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(71, 105, 202)&quot;/></linearGradient></defs><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.17 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.431 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23L33cabhey-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;L33cabhey&quot; width=&quot;474px&quot;/><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.171 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.432 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23MoySP48X_-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;MoySP48X_&quot; transform=&quot;translate(380 0)&quot; width=&quot;474px&quot;/></svg>"
+					src="assets/wave.svg"
 					style="opacity:1;transform:translateX(-50%)"><img data-framer-name="Wave B" alt
 					class="framer-vuTDD framer-offbwf"
-					src="data:image/svg+xml,<svg display=&quot;block&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 854 59&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><defs ><linearGradient id=&quot;L33cabhey-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(47, 86, 195)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(137, 160, 226)&quot;/></linearGradient><linearGradient id=&quot;MoySP48X_-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(243, 224, 212)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(71, 105, 202)&quot;/></linearGradient></defs><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.17 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.431 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23L33cabhey-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;L33cabhey&quot; width=&quot;474px&quot;/><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.171 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.432 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23MoySP48X_-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;MoySP48X_&quot; transform=&quot;translate(380 0)&quot; width=&quot;474px&quot;/></svg>"
+					src="assets/wave.svg"
 					style="opacity:1;transform:translateX(-50%)">
 			</div>
 
@@ -2821,12 +2744,12 @@ s						</div>
 								</div>
 							</div>
 						</div>
+
+						<!-- RSVP Button -->
 						<div class="framer-snk9nn" data-framer-name="Button">
-							<div class="framer-7hxug1" data-framer-name="Mask group"><a
-									class="framer-1q4zx66 framer-lux5qc" data-border="true" data-framer-name="Button"
-									href="https://forms.gle/UTFtb1QmBxz4TBHJA" target="_blank" rel="noopener">
-									<div class="framer-1i7dff5" data-framer-name="Search" style="transform:none"
-										data-framer-component-type="RichTextContainer">
+							<div class="framer-7hxug1" data-framer-name="Mask group">
+								<a id="rsvpButtonId3" class="framer-1q4zx66 framer-lux5qc rsvpButtonLink" data-border="true" data-framer-name="Button" href="https://forms.gle/UTFtb1QmBxz4TBHJA" target="_blank" rel="noopener">
+									<div class="framer-1i7dff5" data-framer-name="Search" style="transform:none" data-framer-component-type="RichTextContainer">
 										<p dir="auto"
 											style="--font-selector:Q1VTVE9NVjI7S29iZTEuMSBCb2xk;--framer-font-family:&quot;Kobe1.1 Bold&quot;, &quot;Kobe1.1 Bold Placeholder&quot;, sans-serif;--framer-font-size:20px;--framer-font-weight:700;--framer-letter-spacing:0.08em;--framer-line-height:18px;--framer-text-color:rgb(247, 239, 232)"
 											class="framer-text rsvpContent">RSVP</p>
@@ -2855,10 +2778,10 @@ s						</div>
 				</div>
 				
 				<img data-framer-name="Wave A" alt class="framer-vuTDD framer-13wth8a"
-					src="data:image/svg+xml,<svg display=&quot;block&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 854 59&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><defs ><linearGradient id=&quot;L33cabhey-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(47, 86, 195)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(137, 160, 226)&quot;/></linearGradient><linearGradient id=&quot;MoySP48X_-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(243, 224, 212)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(71, 105, 202)&quot;/></linearGradient></defs><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.17 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.431 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23L33cabhey-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;L33cabhey&quot; width=&quot;474px&quot;/><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.171 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.432 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23MoySP48X_-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;MoySP48X_&quot; transform=&quot;translate(380 0)&quot; width=&quot;474px&quot;/></svg>"
+					src="assets/wave.svg"
 					style="opacity:1;transform:translateX(-50%)"><img data-framer-name="Wave B" alt
 					class="framer-vuTDD framer-18fchfc"
-					src="data:image/svg+xml,<svg display=&quot;block&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 854 59&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><defs ><linearGradient id=&quot;L33cabhey-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(47, 86, 195)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(137, 160, 226)&quot;/></linearGradient><linearGradient id=&quot;MoySP48X_-2233833933-linear-gradient&quot; x1=&quot;1&quot; x2=&quot;0&quot; y1=&quot;0.4974874371859296&quot; y2=&quot;0.5025125628140704&quot;><stop offset=&quot;0&quot; stop-color=&quot;rgb(243, 224, 212)&quot;/><stop offset=&quot;1&quot; stop-color=&quot;rgb(71, 105, 202)&quot;/></linearGradient></defs><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.17 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.431 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23L33cabhey-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;L33cabhey&quot; width=&quot;474px&quot;/><path d=&quot;M 431.342 32.5 C 443.378 19.993 453.568 9.75 474 9.75 L 474 0 C 461.476 0 451.855 3.102 443.973 7.638 C 421.296 20.688 411.204 49.248 379.2 49.248 C 358.768 49.248 348.578 39.006 336.542 26.501 L 336.121 26.063 C 324.551 14.038 311.044 0 284.4 0 C 257.756 0 244.249 14.038 232.679 26.063 L 232.258 26.501 C 220.222 39.006 210.032 49.249 189.6 49.249 C 169.168 49.249 158.978 39.006 146.942 26.501 L 146.52 26.063 C 134.951 14.038 121.444 0 94.8 0 C 71.171 0 56.176 12.451 42.658 26.5 C 30.622 39.007 20.432 49.25 0 49.25 L 0 59 C 26.644 59 40.151 44.962 51.72 32.937 L 52.142 32.499 C 64.178 19.994 74.368 9.751 94.8 9.751 C 115.232 9.751 125.422 19.994 137.458 32.499 L 137.879 32.937 C 149.449 44.962 162.956 59 189.6 59 C 216.244 59 229.751 44.962 241.32 32.937 L 241.742 32.499 C 253.778 19.994 263.968 9.751 284.4 9.751 C 304.832 9.751 315.022 19.994 327.058 32.499 L 327.479 32.937 C 339.049 44.962 352.556 59 379.2 59 C 405.844 59 419.351 44.962 430.921 32.937 L 431.342 32.499 Z&quot; fill=&quot;url(%23MoySP48X_-2233833933-linear-gradient)&quot; height=&quot;59px&quot; id=&quot;MoySP48X_&quot; transform=&quot;translate(380 0)&quot; width=&quot;474px&quot;/></svg>"
+					src="assets/wave.svg"
 					style="opacity:1;transform:translateX(-50%)">
 				
 			</div>
@@ -2866,32 +2789,226 @@ s						</div>
 		</div>
 		<div id="overlay"></div>
 	</div>
-	<!--
-	<script>(() => { function u() { function n(t, e, i) { let r = document.createElement("a"); r.href = t, r.target = i, r.rel = e, document.body.appendChild(r), r.click(), r.remove() } function o(t) { if (this.dataset.hydrated) { this.removeEventListener("click", o); return } t.preventDefault(), t.stopPropagation(); let e = this.getAttribute("href"); if (!e) return; if (/Mac|iPod|iPhone|iPad/u.test(navigator.userAgent) ? t.metaKey : t.ctrlKey) return n(e, "", "_blank"); let r = this.getAttribute("rel") ?? "", c = this.getAttribute("target") ?? ""; n(e, r, c) } function a(t) { if (this.dataset.hydrated) { this.removeEventListener("auxclick", o); return } t.preventDefault(), t.stopPropagation(); let e = this.getAttribute("href"); e && n(e, "", "_blank") } function s(t) { if (this.dataset.hydrated) { this.removeEventListener("keydown", s); return } if (t.key !== "Enter") return; t.preventDefault(), t.stopPropagation(); let e = this.getAttribute("href"); if (!e) return; let i = this.getAttribute("rel") ?? "", r = this.getAttribute("target") ?? ""; n(e, i, r) } document.querySelectorAll("[data-nested-link]").forEach(t => { t instanceof HTMLElement && (t.addEventListener("click", o), t.addEventListener("auxclick", a), t.addEventListener("keydown", s)) }) } return u })()()</script>
-	<script>(() => { function i() { for (let e of document.querySelectorAll("[data-framer-original-sizes]")) { let t = e.getAttribute("data-framer-original-sizes"); t === "" ? e.removeAttribute("sizes") : e.setAttribute("sizes", t), e.removeAttribute("data-framer-original-sizes") } } function a() { window.__framer_onRewriteBreakpoints = i } return a })()()</script>
-	<script>!function () {
-			var l = "framer_variant"; function u(a, r) { let n = r.indexOf("#"), e = n === -1 ? r : r.substring(0, n), o = n === -1 ? "" : r.substring(n), t = e.indexOf("?"), m = t === -1 ? e : e.substring(0, t), d = t === -1 ? "" : e.substring(t), s = new URLSearchParams(d), h = new URLSearchParams(a); for (let [i, g] of h) s.has(i) || i !== l && s.append(i, g); let c = s.toString(); return c === "" ? e + o : m + "?" + c + o } var w = 'div#main a[href^="#"],div#main a[href^="/"],div#main a[href^="."]', f = "div#main a[data-framer-preserve-params]", p = document.currentScript?.hasAttribute("data-preserve-internal-params"); if (window.location.search && !navigator.webdriver && !/bot|-google|google-|yandex|ia_archiver|crawl|spider/iu.test(navigator.userAgent)) { let a = document.querySelectorAll(p ? `${w},${f}` : f); for (let r of a) { let n = u(window.location.search, r.href); r.setAttribute("href", n) } }
-		}()</script>
-	-->
-
-	<!--<script data-framer-appear-animation="no-preference"></script>-->
-	<!--<script>typeof document < "u" && (window.process = { ...window.process, env: { ...window.process?.env, NODE_ENV: "production" } });</script>-->
 	
-	<!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/react.G3EGc0ga.mjs">-->
-	<!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/rolldown-runtime.D3cOTcPh.mjs">-->
-	<!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/framer.Cb2I5DP_.mjs">-->
-	<!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/motion.gSHq152l.mjs">-->
-	<!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/wMGUmlja5nf3BIqpRYlDrMiLLmxAGGhazOIBy84uuPc.B6dBVzR3.mjs">-->
-	<!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/shared-lib.i04SFO-Z.mjs">-->
+    <!--<script>(() => { function u() { function n(t, e, i) { let r = document.createElement("a"); r.href = t, r.target = i, r.rel = e, document.body.appendChild(r), r.click(), r.remove() } function o(t) { if (this.dataset.hydrated) { this.removeEventListener("click", o); return } t.preventDefault(), t.stopPropagation(); let e = this.getAttribute("href"); if (!e) return; if (/Mac|iPod|iPhone|iPad/u.test(navigator.userAgent) ? t.metaKey : t.ctrlKey) return n(e, "", "_blank"); let r = this.getAttribute("rel") ?? "", c = this.getAttribute("target") ?? ""; n(e, r, c) } function a(t) { if (this.dataset.hydrated) { this.removeEventListener("auxclick", o); return } t.preventDefault(), t.stopPropagation(); let e = this.getAttribute("href"); e && n(e, "", "_blank") } function s(t) { if (this.dataset.hydrated) { this.removeEventListener("keydown", s); return } if (t.key !== "Enter") return; t.preventDefault(), t.stopPropagation(); let e = this.getAttribute("href"); if (!e) return; let i = this.getAttribute("rel") ?? "", r = this.getAttribute("target") ?? ""; n(e, i, r) } document.querySelectorAll("[data-nested-link]").forEach(t => { t instanceof HTMLElement && (t.addEventListener("click", o), t.addEventListener("auxclick", a), t.addEventListener("keydown", s)) }) } return u })()()</script>-->
+    <!--<script>(() => { function i() { for (let e of document.querySelectorAll("[data-framer-original-sizes]")) { let t = e.getAttribute("data-framer-original-sizes"); t === "" ? e.removeAttribute("sizes") : e.setAttribute("sizes", t), e.removeAttribute("data-framer-original-sizes") } } function a() { window.__framer_onRewriteBreakpoints = i } return a })()()</script>-->
+    <!--<script>!function () { var l = "framer_variant"; function u(a, r) { let n = r.indexOf("#"), e = n === -1 ? r : r.substring(0, n), o = n === -1 ? "" : r.substring(n), t = e.indexOf("?"), m = t === -1 ? e : e.substring(0, t), d = t === -1 ? "" : e.substring(t), s = new URLSearchParams(d), h = new URLSearchParams(a); for (let [i, g] of h) s.has(i) || i !== l && s.append(i, g); let c = s.toString(); return c === "" ? e + o : m + "?" + c + o } var w = 'div#main a[href^="#"],div#main a[href^="/"],div#main a[href^="."]', f = "div#main a[data-framer-preserve-params]", p = document.currentScript?.hasAttribute("data-preserve-internal-params"); if (window.location.search && !navigator.webdriver && !/bot|-google|google-|yandex|ia_archiver|crawl|spider/iu.test(navigator.userAgent)) { let a = document.querySelectorAll(p ? `${w},${f}` : f); for (let r of a) { let n = u(window.location.search, r.href); r.setAttribute("href", n) } } }()</script>-->
 
-	<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/react.G3EGc0ga.mjs">
-	<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/rolldown-runtime.D3cOTcPh.mjs">
-	<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/framer.Cb2I5DP_.mjs">
-	<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/motion.gSHq152l.mjs">
-	<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/wMGUmlja5nf3BIqpRYlDrMiLLmxAGGhazOIBy84uuPc.B6dBVzR3.mjs">
-	<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/shared-lib.i04SFO-Z.mjs">
-	
-	<div id="svg-templates" style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict" aria-hidden="true"></div>
+
+    <!--<script data-framer-appear-animation="no-preference"></script>-->
+    <!--<script>typeof document<"u"&&(window.process={...window.process,env:{...window.process?.env,NODE_ENV:"production"}});</script>-->
+    <!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/react.G3EGc0ga.mjs">-->
+    <!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/rolldown-runtime.D3cOTcPh.mjs">-->
+    <!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/framer.Cb2I5DP_.mjs">-->
+    <!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/motion.gSHq152l.mjs">-->
+    <!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/wMGUmlja5nf3BIqpRYlDrMiLLmxAGGhazOIBy84uuPc.B6dBVzR3.mjs">-->
+    <!--<link rel="modulepreload" fetchpriority="low" href="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/shared-lib.i04SFO-Z.mjs">-->
+    
+	<!--<script type="module" async data-framer-bundle="main" fetchPriority="low" src="https://framerusercontent.com/sites/kESkTDaJx97kp1rswjYaX/script_main.DS5c-pDg.mjs"></script>-->
+    
+	<!--<div id="svg-templates" style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict" aria-hidden="true">-->
+
+	<script>
+
+		(function () {
+
+			const targetDate = new Date("2026-07-21");
+
+			function getDayCount() {
+
+      			const today = new Date();
+
+      			today.setHours(0, 0, 0, 0);
+      			targetDate.setHours(0, 0, 0, 0);
+
+				return Math.max(0, Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24)));
+
+			}
+
+			const diffDays = getDayCount();
+
+			function setDaysLeft(daysLeftTextSuffix) {
+
+				//document.getElementById("dayCount").textContent = `${diffDays} ${daysLeftTextSuffix}`;
+
+				const dayCountText = `${diffDays} ${daysLeftTextSuffix}`;
+				document.querySelectorAll(".dayCount").forEach((node) => {
+					if (node.textContent !== dayCountText) {
+						node.textContent = dayCountText;
+					}
+				});
+
+			}
+
+			// Find country
+      		//let country = null;
+
+			// https://developer.mozilla.org/docs/Web/API/Navigator/language
+			let userLanguage = navigator.language || navigator.userLanguage; 
+			console.log("The language is: " + userLanguage);
+
+			const language = userLanguage.split("-")[0];
+
+			/*
+      		try {
+				country = typeof getCountry === "function" ? getCountry() : null;
+      		} catch (_) {
+				console.log("could not get country");
+			}
+			*/
+
+			// Default values
+      		let locationText = "Villa Soludden (Stockholm Archipelago)";
+			let rsvpText = "RSVP";
+			let moreInfoText = "More info to come";
+			let lastRsvpDateText = "Please respond by March 15th";
+			let daysLeftText = "days left!";
+			let rsvpLink = "https://forms.gle/UTFtb1QmBxz4TBHJA";
+
+			console.log(language);
+
+			/*
+				English: en - https://forms.gle/TVU5LXU342ScED3G7
+				Sweden: sv - https://forms.gle/oa2jU9vgwbme7cX19
+				Poland: pl - https://forms.gle/s86NrXZuV1CXiUz9A
+				Italy: it - https://forms.gle/ybMQEDmn8EGhGh7VA
+			*/
+
+			if (language == "sv") {
+
+				console.log("Setting Swedish");
+
+        		locationText = "Villa Soludden (Värmdö)";
+				rsvpText = "RSVP";
+				moreInfoText = "Mer info kommer snart";
+				lastRsvpDateText = "Svara senast 15 mars";
+				daysLeftText = "dagar kvar!";
+				rsvpLink = "https://forms.gle/oa2jU9vgwbme7cX19";
+
+			} else if (language === "it") {
+
+				console.log("Setting Italian");
+
+        		locationText = "Villa Soludden (Arcipelago di Stoccolma)";
+				rsvpText = "Rispondi";
+				moreInfoText = "A breve piu dettagli";
+				lastRsvpDateText = "Facci sapere entro il 15 marzo";
+				daysLeftText = "giorni rimanenti!";
+				rsvpLink = "https://forms.gle/ybMQEDmn8EGhGh7VA";
+				//Mancano 153 giorni!
+
+      		} else if (language === "pl") {
+
+        		locationText = "Villa Soludden (Archipelag Sztokholmski)";
+				rsvpText = "Odpowiedz";
+				moreInfoText = "Więcej informacji wkrótce";
+				lastRsvpDateText = "Daj nam znać do 15 marca";
+				daysLeftText = "dni do ślubu!";
+				rsvpLink = "https://forms.gle/s86NrXZuV1CXiUz9A";
+
+      		}
+
+			function applyLocationText() {
+				document.querySelectorAll(".locationTextContent").forEach((node) => {
+					if (node.textContent !== locationText) node.textContent = locationText;
+				});
+			}
+
+			function applyMoreInfoText() {
+				document.querySelectorAll(".moreInfoContent").forEach((node) => {
+					if (node.textContent !== moreInfoText) node.textContent = moreInfoText;
+				});
+			}
+
+			function applyRsvpText() {
+				document.querySelectorAll(".rsvpContent").forEach((node) => {
+					if (node.textContent !== rsvpText) node.textContent = rsvpText;
+				});
+			}
+
+			function applyLastRsvpDateText() {
+				document.querySelectorAll(".lastRsvpDateContent").forEach((node) => {
+					if (node.textContent !== lastRsvpDateText) node.textContent = lastRsvpDateText;
+				});
+			}
+
+        	function applyRsvpButtonLink() {
+				document.querySelectorAll(".rsvpButtonLink").forEach((node) => {
+					node.setAttribute("href",  rsvpLink);
+					//if (node.textContent !== lastRsvpDateText) node.textContent = lastRsvpDateText;
+				});
+				
+            	/*const link1 = document.getElementById("rsvpButtonId1");
+            	link1.href = rsvpLink;
+
+            	const link2 = document.getElementById("rsvpButtonId2");
+            	link2.href = rsvpLink;
+
+            	const link3 = document.getElementById("rsvpButtonId3");
+            	link3.href = rsvpLink;*/
+
+        	}
+
+			function applyTexts() {
+
+				applyLocationText();
+				applyMoreInfoText();
+				applyRsvpText();
+				applyLastRsvpDateText();
+
+				setDaysLeft(daysLeftText);
+
+				applyRsvpButtonLink();
+
+			}
+
+			function syncTexts() {
+
+				applyTexts();
+
+				let runs = 0;
+				const maxRuns = 40;
+				const syncTimer = setInterval(() => {
+					applyTexts();
+					runs += 1;
+					if (runs >= maxRuns) clearInterval(syncTimer);
+				}, 100);
+
+				let isApplyingTexts = false;
+				const applyTextsSafely = () => {
+					if (isApplyingTexts) return;
+					isApplyingTexts = true;
+					applyTexts();
+					isApplyingTexts = false;
+				};
+
+				const observer = new MutationObserver(() => applyTextsSafely());
+				observer.observe(document.body, {
+					subtree: true,
+					childList: true,
+					characterData: true
+				});
+
+				setTimeout(() => observer.disconnect(), 8000);
+
+			}
+
+			document.addEventListener("DOMContentLoaded", syncTexts);
+			window.addEventListener("load", applyTexts);
+
+			//document.addEventListener("DOMContentLoaded", syncTexts);
+			//window.addEventListener("load", syncTexts);
+
+			//syncTexts();
+
+			applyTexts();
+			//const myTimeout = setTimeout(applyTexts, 2000);
+
+		})();
+
+	</script>
+
+    </div>
 
 </body>
 
